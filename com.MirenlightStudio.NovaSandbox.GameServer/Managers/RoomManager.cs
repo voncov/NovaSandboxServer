@@ -58,6 +58,13 @@ namespace com.MirenlightStudio.NovaSandbox.GameServer.Managers
 
                 serializedRooms.Add(NovaSerializer.Serialize<RoomInfo>(info));
             }
+
+            RoomListResponsePacket response = new()
+            {
+                RoomSerializedListString = [.. serializedRooms]
+            };
+
+            peer.Send(response.Serialize(), DeliveryMethod.ReliableOrdered);
         }
 
         public void Dispose()
