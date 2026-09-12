@@ -37,6 +37,10 @@ namespace com.MirenlightStudio.NovaSandbox.GameServer.Managers
                 return;
             }
 
+            if (_rooms.Length <= 0)
+            {
+                return;
+            }
             List<string> serializedRooms = new(_rooms.Length);
 
             foreach (Room room in _rooms)
