@@ -2,6 +2,7 @@
 using com.MirenlightStudio.NovaSandbox.GameServer.Rooms;
 using com.MirenlightStudio.NovaSandbox.Networking;
 using com.MirenlightStudio.NovaSandbox.Networking.Packets;
+using com.MirenlightStudio.NovaSandbox.Static;
 using LiteNetLib;
 
 namespace com.MirenlightStudio.NovaSandbox.GameServer.Managers
@@ -44,7 +45,18 @@ namespace com.MirenlightStudio.NovaSandbox.GameServer.Managers
                 bool hasOwner = room.Owner != null && room.Owner.inRoom == true;
                 bool hasPassword = room.Password != null && !string.IsNullOrEmpty(room.Password);
 
-                serializedRooms.Add();
+                RoomInfo info = new()
+                {
+                    RoomGuid = room.Guid,
+                    Map = room.Map,
+                    Name = room.Name,
+                    CountPlayers = room.CurrentPlayers,
+                    MaxPlayers = room.MaxPlayers,
+                    Locked = hasPassword,
+                    Owned = hasOwner
+                };
+
+                serializedRooms.Add(NovaSerializer.Serialize<RoomInfo>(info));
             }
         }
 
